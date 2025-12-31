@@ -102,7 +102,10 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 # VPSLocalisationLocations
-/Assets/Samples/Niantic Lightship Meta Plugin/3.16.0-2509150829/Samples/VPS/VPSLocalisationLocations/f8d8ae4324064f3695aa9daa6534d35f.107(MockLocation).prefab
-/Assets/Samples/Niantic Lightship Meta Plugin/3.16.0-2509150829/Samples/VPS/VPSLocalisationLocations/f8d8ae4324064f3695aa9daa6534d35f.107(MockLocation).prefab.meta
-/Assets/Samples/Niantic Lightship Meta Plugin/3.16.0-2509150829/Samples/VPS/VPSLocalisationLocations/f8d8ae4324064f3695aa9daa6534d35f.107.asset
-/Assets/Samples/Niantic Lightship Meta Plugin/3.16.0-2509150829/Samples/VPS/VPSLocalisationLocations/f8d8ae4324064f3695aa9daa6534d35f.107.asset.meta
+/Assets/VPS/Private Mesh - 4ED9AC89A74146A88DD89D6A428C8356(MockLocation).prefab
+/Assets/VPS/Private Mesh - 4ED9AC89A74146A88DD89D6A428C8356(MockLocation).prefab.meta
+/Assets/VPS/Private Mesh - 4ED9AC89A74146A88DD89D6A428C8356.asset
+/Assets/VPS/Private Mesh - 4ED9AC89A74146A88DD89D6A428C8356.asset.meta
+
+# Pirvate settings
+/Assets/XR/Settings/Lightship Settings.asset
