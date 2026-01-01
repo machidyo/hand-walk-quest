@@ -113,3 +113,5 @@ InitTestScene*.unity*
 # Paid Assets
 /Assets/PaidAssets
 /Assets/PaidAssets.meta
+/Assets/Resources/Sound/SE
+/Assets/Resources/Sound/SE.meta
