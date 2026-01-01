@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
+using R3;
 
 public class Player : MonoBehaviour
 {
-    private int point = 0;
+    public Subject<Unit> Banana { get; private set; } = new();
+    public Subject<Unit> Apple { get; private set; } = new();
+    public Subject<Unit> Coin { get; private set; } = new();
     
     void Start()
     {
-        
     }
 
     void Update()
@@ -17,10 +19,19 @@ public class Player : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        // todo: 取得パーティクル
-        SoundManager.Instance.PlaySound(SoundManager.SoundNames.Coin);
-        point++;
-        Destroy(other.gameObject);
-        Debug.Log($"Get Coin, Point: {point}");
+        if (other.gameObject.name.Contains("Coin"))
+        {
+            // todo: 取得パーティクル
+            Destroy(other.gameObject);
+            Coin.OnNext(Unit.Default);
+        }
+        if (other.gameObject.name.Contains("Banana"))
+        {
+            Banana.OnNext(Unit.Default);
+        }
+        if (other.gameObject.name.Contains("Apple"))
+        {
+            Apple.OnNext(Unit.Default);
+        }
     }
 }

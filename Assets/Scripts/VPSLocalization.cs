@@ -2,16 +2,29 @@ using System.Collections.Generic;
 using Niantic.Lightship.AR.LocationAR;
 using Niantic.Lightship.AR.PersistentAnchors;
 using UnityEngine;
+using R3;
 
 public class VPSLocalization : MonoBehaviour
 {
     [SerializeField] private ARLocationManager arLocationManager;
-    [SerializeField] private List<GameObject> coins;
+
+    [SerializeField] private GameObject debugARLocationGameObject;
+
+    public ReactiveProperty<bool> IsTracked { get; } = new();
 
     void Start()
     {
-        HideCoins();
+        IsTracked.Value = false;
         arLocationManager.locationTrackingStateChanged += OnLocationTrackingStateChanged;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            IsTracked.Value = true;
+            debugARLocationGameObject.SetActive(true);
+        }
     }
 
     private void OnLocationTrackingStateChanged(ARLocationTrackedEventArgs args)
@@ -19,6 +32,7 @@ public class VPSLocalization : MonoBehaviour
         if (args.Tracking)
         {
             args.ARLocation.gameObject.SetActive(true);
+            IsTracked.Value = true;
         }
         else
         {
@@ -26,28 +40,13 @@ public class VPSLocalization : MonoBehaviour
             if (args.TrackingStateReason == ARLocationTrackingStateReason.Limited)
             {
                 args.ARLocation.gameObject.SetActive(true);
-                ShowCoins();
+                IsTracked.Value = true;
             }
             else
             {
                 args.ARLocation.gameObject.SetActive(false);
+                IsTracked.Value = false;
             }
-        }
-    }
-
-    private void ShowCoins()
-    {
-        foreach (var coin in coins)
-        {
-            coin.SetActive(true);
-        }
-    }
-
-    private void HideCoins()
-    {
-        foreach (var coin in coins)
-        {
-            coin.SetActive(false);
         }
     }
 }
