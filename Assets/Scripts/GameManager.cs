@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
 
     private async UniTask ShowMessage(string message, int duration = 3000)
     {
+        Debug.Log($"ShowMessage: {message}");
         statusText.gameObject.SetActive(true);
         statusText.text = message;
         await UniTask.Delay(duration);

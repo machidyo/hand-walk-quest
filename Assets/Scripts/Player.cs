@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        // Debug.Log($"START OnTriggerEnter, {other.gameObject.name}");
         if (other.gameObject.name.Contains("Item"))
         {
             // todo: 取得パーティクル
