@@ -85,9 +85,16 @@ public class GameManager : MonoBehaviour
         player.Apple
             .Subscribe(_ =>
             {
-                SoundManager.Instance.PlaySound(SoundManager.SoundNames.Win);
-                ShowMessage("You WIN!!!").Forget();
+                BGM.Instance.FadeOutSound(0.5f).Forget();
                 goalApple.SetActive(false);
+                HideCoins();
+                
+                SoundManager.Instance.PlaySound(SoundManager.SoundNames.Win);
+                pointText.text = $"You got {point}";
+                ShowMessage("You WIN!!!").Forget();
+
+                point = 0;
+                startBanana.SetActive(true);
             });
     }
 
