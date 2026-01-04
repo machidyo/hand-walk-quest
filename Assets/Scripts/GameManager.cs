@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private CompositeDisposable disposables = new();
     
     private int point = 0;
+    private int bigCount = 0;
     
     void Start()
     {
@@ -55,20 +56,29 @@ public class GameManager : MonoBehaviour
                 if (item.Contains("Ring"))
                 {
                     point += 2;
+                    bigCount++;
                 }
                 if (item.Contains("Bag"))
                 {
                     point += 3;
+                    bigCount++;
                 }
                 if (item.Contains("Jewel"))
                 {
                     point += 5;
+                    bigCount++;
                 }
                 // todo: 得点追加表示
                 pointText.text = $"Point: {point}";
                 if (point >= 5)
                 {
                     goalApple.SetActive(true);
+                }
+
+                if (bigCount >= 3)
+                {
+                    ShowCoins();
+                    bigCount = 0;
                 }
             }).AddTo(disposables);
 

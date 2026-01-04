@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.name.Contains("Item"))
         {
             // todo: 取得パーティクル
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             Item.OnNext(other.gameObject.name);
         }
         if (other.gameObject.name.Contains("Banana"))
