@@ -44,14 +44,28 @@ public class GameManager : MonoBehaviour
                 ShowCoins();
             }).AddTo(disposables);
 
-        player.Coin
-            .Subscribe(_ =>
+        player.Item
+            .Subscribe(item =>
             {
                 SoundManager.Instance.PlaySound(SoundManager.SoundNames.Coin);
-                point++;
+                if (item.Contains("Coin"))
+                {
+                    point += 1;
+                }
+                if (item.Contains("Ring"))
+                {
+                    point += 2;
+                }
+                if (item.Contains("Bag"))
+                {
+                    point += 3;
+                }
+                if (item.Contains("Jewel"))
+                {
+                    point += 5;
+                }
                 // todo: 得点追加表示
                 pointText.text = $"Point: {point}";
-
                 if (point >= 5)
                 {
                     goalApple.SetActive(true);

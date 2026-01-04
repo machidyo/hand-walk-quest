@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public Subject<Unit> Banana { get; private set; } = new();
     public Subject<Unit> Apple { get; private set; } = new();
-    public Subject<Unit> Coin { get; private set; } = new();
+    public Subject<String> Item { get; private set; } = new();
     
     void Start()
     {
@@ -19,11 +19,11 @@ public class Player : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Coin"))
+        if (other.gameObject.name.Contains("Item"))
         {
             // todo: 取得パーティクル
             Destroy(other.gameObject);
-            Coin.OnNext(Unit.Default);
+            Item.OnNext(other.gameObject.name);
         }
         if (other.gameObject.name.Contains("Banana"))
         {
