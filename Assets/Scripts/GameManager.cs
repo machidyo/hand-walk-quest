@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         player.Banana
             .Subscribe(_ =>
             {
-                // todo: Play BGM Start
+                BGM.Instance.PlaySound(BGM.BGMTypes.Playing);
                 startBanana.SetActive(false);
                 ShowMessage($"GAME START{Environment.NewLine}Get Coins").Forget();
                 ShowCoins();
