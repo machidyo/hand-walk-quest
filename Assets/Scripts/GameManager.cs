@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
 
                 point = 0;
                 startBanana.SetActive(true);
-            });
+            }).AddTo(disposables);
     }
 
     private void OnDestroy()
