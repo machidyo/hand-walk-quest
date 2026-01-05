@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using R3;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +14,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject startBanana;
     [SerializeField] private GameObject goalApple;
-    [SerializeField] private List<GameObject> coins;
+    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private GameObject ringPrefab;
+    [SerializeField] private GameObject bagPrefab;
+    [SerializeField] private GameObject jewelPrefab;
+    [SerializeField] private List<GameObject> itemPoints;
 
     [SerializeField] private TextMeshProUGUI pointText;
     [SerializeField] private TextMeshProUGUI statusText;
@@ -83,7 +89,7 @@ public class GameManager : MonoBehaviour
             }).AddTo(disposables);
 
         player.Apple
-            .Subscribe(_ =>
+            .Subscribe(async _ =>
             {
                 BGM.Instance.FadeOutSound(0.5f).Forget();
                 goalApple.SetActive(false);
@@ -94,6 +100,7 @@ public class GameManager : MonoBehaviour
                 ShowMessage("You WIN!!!").Forget();
 
                 point = 0;
+                await UniTask.Delay(3000);
                 startBanana.SetActive(true);
             }).AddTo(disposables);
     }
@@ -105,17 +112,38 @@ public class GameManager : MonoBehaviour
 
     private void ShowCoins()
     {
-        foreach (var coin in coins)
+        foreach (var coin in itemPoints)
         {
-            coin.SetActive(true);
+            GameObject go = null;
+            if (coin.name.Contains("Coin"))
+            {
+                go = coinPrefab;
+            }
+            if (coin.name.Contains("Ring"))
+            {
+                go = ringPrefab;
+            }
+            if (coin.name.Contains("Bag"))
+            {
+                go = bagPrefab;
+            }
+            if (coin.name.Contains("Jewel"))
+            {
+                go = jewelPrefab;
+            }
+            Instantiate(go, coin.transform);
         }
     }
 
     private void HideCoins()
     {
-        foreach (var coin in coins)
+        var items = itemPoints
+            .Select(ip => ip.GetComponentInChildren<SphereCollider>())
+            .Where(sc => sc != null)
+            .Select(sc => sc.gameObject);
+        foreach (var item in items)
         {
-            coin.SetActive(false);
+            Destroy(item);
         }
     }
 
