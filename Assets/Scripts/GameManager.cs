@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject startBanana;
     [SerializeField] private GameObject goalApple;
+    
+    [SerializeField] private List<GameObject> ringPoints;
+    [SerializeField] private List<GameObject> bagPoints;
+    [SerializeField] private List<GameObject> jewelPoints;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject ringPrefab;
     [SerializeField] private GameObject bagPrefab;
     [SerializeField] private GameObject jewelPrefab;
-    [SerializeField] private List<GameObject> itemPoints;
 
     [SerializeField] private TextMeshProUGUI pointText;
     [SerializeField] private TextMeshProUGUI statusText;
@@ -32,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         startBanana.SetActive(false);
         goalApple.SetActive(false);
-        HideCoins();
+        DestroyItems();
 
         vpsLocalization.IsTracked
             .DistinctUntilChanged()
@@ -48,7 +51,7 @@ public class GameManager : MonoBehaviour
                 BGM.Instance.PlaySound(BGM.BGMTypes.Playing);
                 startBanana.SetActive(false);
                 ShowMessage($"GAME START{Environment.NewLine}Get Coins").Forget();
-                ShowCoins();
+                InstantiateItems();
             }).AddTo(disposables);
 
         player.Item
@@ -83,7 +86,7 @@ public class GameManager : MonoBehaviour
 
                 if (bigCount >= 3)
                 {
-                    ShowCoins();
+                    InstantiateItems();
                     bigCount = 0;
                 }
             }).AddTo(disposables);
@@ -93,7 +96,7 @@ public class GameManager : MonoBehaviour
             {
                 BGM.Instance.FadeOutSound(0.5f).Forget();
                 goalApple.SetActive(false);
-                HideCoins();
+                DestroyItems();
                 
                 SoundManager.Instance.PlaySound(SoundManager.SoundNames.Win);
                 pointText.text = $"You got {point}";
@@ -110,37 +113,58 @@ public class GameManager : MonoBehaviour
         disposables.Dispose();
     }
 
-    private void ShowCoins()
+    private void InstantiateItems()
     {
-        foreach (var coin in itemPoints)
+        foreach (var p in ringPoints)
         {
-            GameObject go = null;
-            if (coin.name.Contains("Coin"))
-            {
-                go = coinPrefab;
-            }
-            if (coin.name.Contains("Ring"))
-            {
-                go = ringPrefab;
-            }
-            if (coin.name.Contains("Bag"))
-            {
-                go = bagPrefab;
-            }
-            if (coin.name.Contains("Jewel"))
-            {
-                go = jewelPrefab;
-            }
-            Instantiate(go, coin.transform);
+            InstantiateItem(p);
+        }
+        foreach (var p in bagPoints)
+        {
+            InstantiateItem(p);
+        }
+        foreach (var p in jewelPoints)
+        {
+            InstantiateItem(p);
         }
     }
 
-    private void HideCoins()
+    private void InstantiateItem(GameObject item)
+    {
+        GameObject go = null;
+        if (item.name.Contains("Coin"))
+        {
+            go = coinPrefab;
+        }
+        if (item.name.Contains("Ring"))
+        {
+            go = ringPrefab;
+        }
+        if (item.name.Contains("Bag"))
+        {
+            go = bagPrefab;
+        }
+        if (item.name.Contains("Jewel"))
+        {
+            go = jewelPrefab;
+        }
+        Instantiate(go, item.transform);
+    }
+
+    private void DestroyItems()
+    {
+        DestroyItemsOn(ringPoints);
+        DestroyItemsOn(bagPoints);
+        DestroyItemsOn(jewelPoints);
+    }
+
+    private void DestroyItemsOn(List<GameObject> itemPoints)
     {
         var items = itemPoints
             .Select(ip => ip.GetComponentInChildren<SphereCollider>())
             .Where(sc => sc != null)
             .Select(sc => sc.gameObject);
+        // Debug.Log($"DestroyItemsOn {itemPoints.Count}, {items.Count()}");
         foreach (var item in items)
         {
             Destroy(item);
