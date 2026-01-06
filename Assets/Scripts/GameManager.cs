@@ -86,8 +86,28 @@ public class GameManager : MonoBehaviour
 
                 if (bigCount >= 3)
                 {
-                    InstantiateItems();
-                    bigCount = 0;
+                    // 残っているコインを一度全て削除
+                    DestroyItems();
+                    
+                    // 最後に取ったもの以外のルートを復活させる
+                    if (item.Contains("Ring"))
+                    {
+                        InstantiateItemsOn(bagPoints);
+                        InstantiateItemsOn(jewelPoints);
+                    }
+                    if (item.Contains("Bag"))
+                    {
+                        InstantiateItemsOn(ringPoints);
+                        InstantiateItemsOn(jewelPoints);
+                    }
+                    if (item.Contains("Jewel"))
+                    {
+                        InstantiateItemsOn(ringPoints);
+                        InstantiateItemsOn(bagPoints);
+                    }
+
+                    // 二つだけ復活させるので、最初から1つ取得した状態になる
+                    bigCount = 1;
                 }
             }).AddTo(disposables);
 
