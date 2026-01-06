@@ -115,40 +115,34 @@ public class GameManager : MonoBehaviour
 
     private void InstantiateItems()
     {
-        foreach (var p in ringPoints)
-        {
-            InstantiateItem(p);
-        }
-        foreach (var p in bagPoints)
-        {
-            InstantiateItem(p);
-        }
-        foreach (var p in jewelPoints)
-        {
-            InstantiateItem(p);
-        }
+        InstantiateItemsOn(ringPoints);
+        InstantiateItemsOn(bagPoints);
+        InstantiateItemsOn(jewelPoints);
     }
 
-    private void InstantiateItem(GameObject item)
+    private void InstantiateItemsOn(List<GameObject> points)
     {
-        GameObject go = null;
-        if (item.name.Contains("Coin"))
+        foreach (var p in points)
         {
-            go = coinPrefab;
+            GameObject go = null;
+            if (p.name.Contains("Coin"))
+            {
+                go = coinPrefab;
+            }
+            if (p.name.Contains("Ring"))
+            {
+                go = ringPrefab;
+            }
+            if (p.name.Contains("Bag"))
+            {
+                go = bagPrefab;
+            }
+            if (p.name.Contains("Jewel"))
+            {
+                go = jewelPrefab;
+            }
+            Instantiate(go, p.transform);
         }
-        if (item.name.Contains("Ring"))
-        {
-            go = ringPrefab;
-        }
-        if (item.name.Contains("Bag"))
-        {
-            go = bagPrefab;
-        }
-        if (item.name.Contains("Jewel"))
-        {
-            go = jewelPrefab;
-        }
-        Instantiate(go, item.transform);
     }
 
     private void DestroyItems()
