@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8198114037150920804}
   - component: {fileID: 6638761521430886155}
   - component: {fileID: 6396937639891035222}
+  - component: {fileID: 493491439205930148}
   m_Layer: 0
   m_Name: Item_Ring
   m_TagString: Untagged
@@ -333,3 +334,15 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
+--- !u!114 &493491439205930148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2992238511539856845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e677938f88747f488ccbfd7cd3ed052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
